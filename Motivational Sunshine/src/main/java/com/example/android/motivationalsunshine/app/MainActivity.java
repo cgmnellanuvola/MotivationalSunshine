@@ -12,12 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ShareActionProvider;
 
-import com.example.android.sunshine.app.R;
+import com.example.android.motivationalsunshine.app.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ShareActionProvider mShareActionProvider;
     private static final String LOG_TAG = MainActivity.class.getSimpleName() + "_Log_State";
+    private ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onStart() {
