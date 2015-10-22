@@ -1,7 +1,10 @@
-package com.example.android.sunshine.app;
+package com.example.android.motivationalsunshine.app;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,8 +13,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.android.sunshine.app.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,17 +31,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class ForecastFragment extends Fragment {
-    ArrayAdapter<String> mForecastAdapter;
+    private ArrayAdapter<String> mForecastAdapter;
 
     public ForecastFragment() {
     }
@@ -45,6 +49,11 @@ public class ForecastFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        updateWeather();
     }
 
     @Override
@@ -59,7 +68,7 @@ public class ForecastFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            new FetchWeatherTask().execute("6541997");
+            updateWeather();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -68,31 +77,34 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String[] data = {
-                "Mon 6/23 - Sunny - 31/17",
-                "Tue 6/24 - Foggy - 21/8",
-                "Wed 6/25 - Cloudy - 22/17",
-                "Thurs 6/26 - Rainy - 18/11",
-                "Fri 6/27 - Foggy - 21/10",
-                "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
-                "Sun 6/29 - Sunny - 20/7"
-        };
-
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
-
-        mForecastAdapter = new ArrayAdapter<String>(
+        mForecastAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview,
-                weekForecast
+                new ArrayList<String>()
         );
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        final ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String forecast = mForecastAdapter.getItem(i);
+                Intent explicitIntent = new Intent(getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, forecast);
+                startActivity(explicitIntent);
+            }
+        });
+
         return rootView;
+    }
+
+    private void updateWeather (){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String location = preferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        new FetchWeatherTask().execute(location);
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
@@ -104,9 +116,8 @@ public class ForecastFragment extends Fragment {
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-            String postCode = params[0];
             int numDays = 4;
-            String location = "Lecco";
+            String location = params[0];
             String country = "Italy/";
             String language = "lang:IT";
             String apiKey = "abb806c94f5f568e";
@@ -133,6 +144,7 @@ public class ForecastFragment extends Fragment {
                 if (inputStream == null) {
                     // Nothing to do.
                     forecastJsonStr = null;
+                    return null;
                 }
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -216,10 +228,13 @@ public class ForecastFragment extends Fragment {
             //create a Gregorian Calendar, which is in current date
             GregorianCalendar gc = new GregorianCalendar();
 
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unitsType = preferences.getString(getString(R.string.pref_temperature_key), getString(R.string.pref_temperature_celsius));
+
             for (int i = 0; i < weatherArray.length(); i++) {
                 // For now, using the format "Day, description, hi/low"
                 String day;
-                String description="";
+                String description;
 
                 // Get the JSON object representing the day
                 JSONObject dayForecast = weatherArray.getJSONObject(i);
@@ -239,9 +254,12 @@ public class ForecastFragment extends Fragment {
 
                 description = dayForecast.getString(WUND_DESCRIPTION);
 
-                resultStrs[i] = day + " - " + description + " - " + low + "/" + high;
+                if (unitsType.equals(getString(R.string.pref_temperature_celsius))) {
+                    resultStrs[i] = day + " - " + description + " - " + low + "C/" + high + "C";
+                } else {
+                    resultStrs[i] = day + " - " + description + " - " + ((low * 1.8) + 32) + "F/" + ((high * 1.8) + 32) + "F";
+                }
             }
-
             return resultStrs;
 
         }
