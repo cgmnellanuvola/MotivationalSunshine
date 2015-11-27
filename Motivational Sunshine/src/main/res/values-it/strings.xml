@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+    <string name="app_name">Motivational Sunshine</string>
+    <string name="format_humidity">Umidità: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
+    <string name="action_settings">Impostazione</string>
+    <string name="action_refresh">Aggiorna</string>
+    <string name="action_map">Posizione sulla mappa</string>
+    <string name="format_wind_mph">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="pref_configuration">Modifica configurazione</string>
+    <string name="today">Oggi</string>
+    <string name="tomorrow">Domani</string>
+    <string name="format_wind_kmh">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="pref_header_notifications">Notifiche</string>
+    <string name="pref_location_label">Seleziona località</string>
+    <string name="pref_title_sync_frequency">Frequenza sincronizzazione</string>
+    <string name="pref_title_system_sync_settings">Configurazione sincronizzazione</string>
+    <string name="title_activity_settings">Impostazioni</string>
+    <string name="title_activity_detail">Dettaglio del giorno</string>
+
+    <!-- Empty Weather Database -->
+    <string name="empty_forecast_list">Nessuna informazione disponibile</string>
+    <string name="empty_forecast_list_no_connection">Nessuna informazione disponibile. Non sei connesso alla rete.</string>
+</resources>

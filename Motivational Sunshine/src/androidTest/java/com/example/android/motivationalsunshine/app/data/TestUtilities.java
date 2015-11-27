@@ -50,13 +50,13 @@ public class TestUtilities extends AndroidTestCase {
         ContentValues weatherValues = new ContentValues();
         weatherValues.put(WeatherContract.WeatherEntry.COLUMN_LOC_KEY, locationRowId);
         weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, TEST_DATE);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DEGREES, 1.1);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, 1.2);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 1.3);
+//        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DEGREES, 1.1);
+//        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, 1.2);
+//        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 1.3);
         weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, 75);
         weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP, 65);
         weatherValues.put(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC, "Asteroids");
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED, 5.5);
+//        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED, 5.5);
         weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID, 321);
 
         return weatherValues;
@@ -71,8 +71,8 @@ public class TestUtilities extends AndroidTestCase {
         ContentValues testValues = new ContentValues();
         testValues.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING, TEST_LOCATION);
         testValues.put(WeatherContract.LocationEntry.COLUMN_CITY_NAME, "North Pole");
-        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, 64.7488);
-        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LONG, -147.353);
+//        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, 64.7488);
+//        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LONG, -147.353);
 
         return testValues;
     }

@@ -88,8 +88,8 @@ public class TestDb extends AndroidTestCase {
         final HashSet<String> locationColumnHashSet = new HashSet<String>();
         locationColumnHashSet.add(WeatherContract.LocationEntry._ID);
         locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_CITY_NAME);
-        locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_COORD_LAT);
-        locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_COORD_LONG);
+//        locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_COORD_LAT);
+//        locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_COORD_LONG);
         locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING);
 
         int columnNameIndex = c.getColumnIndex("name");
@@ -130,8 +130,8 @@ public class TestDb extends AndroidTestCase {
         ContentValues testValues = new ContentValues();
         testValues.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING, testLocationSetting);
         testValues.put(WeatherContract.LocationEntry.COLUMN_CITY_NAME, testCityName);
-        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, testLatitude);
-        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LONG, testLongitude);
+//        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, testLatitude);
+//        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LONG, testLongitude);
 
         // Insert ContentValues into database and get a row ID back
         long locationRowId;

@@ -14,11 +14,11 @@
         android:title="@string/pref_location_label" />
 
     <ListPreference
-        android:key="@string/pref_temperature_key"
-        android:title="Select temperature units"
+        android:defaultValue="@string/pref_units_metric"
         android:entries="@array/TemperatureUnits"
         android:entryValues="@array/ReturnedTemperatureUnits"
-        android:defaultValue="@string/pref_temperature_celsius">
+        android:key="@string/pref_units_key"
+        android:title="Select temperature units">
     </ListPreference>
 
 </PreferenceScreen>
